@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Import Students</h2>
+<p>Upload CSV file with columns:</p>
+<ul>
+  <li>full_name</li>
+  <li>phone_number</li>
+  <li>index_number</li>
+  <li>username</li>
+  <li>gender</li>
+  <li>course</li>
+  <li>level</li>
+  <li>email</li>
+</ul>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="student_file" required />
+  <button type="submit">Import</button>
+</form>
+{% endblock %}

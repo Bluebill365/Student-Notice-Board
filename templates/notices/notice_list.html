@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Notice List</h2>
+
+{% for notice in notices %}
+<div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px">
+  <h3>{{ notice.title }}</h3>
+  <p>{{ notice.message }}</p>
+  <p><strong>Type:</strong> {{ notice.notice_type }}</p>
+  <p><strong>Target Level:</strong> {{ notice.target_level }}</p>
+  <p><strong>Date:</strong> {{ notice.created_at }}</p>
+</div>
+{% empty %}
+<p>No notices available.</p>
+{% endfor %} {% endblock %}
