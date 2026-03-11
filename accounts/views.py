@@ -1,6 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views import View
@@ -46,5 +46,19 @@ class UserSignupView(View):
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
 
-class UserLogoutView(LogoutView):
-    pass
+class UserLogoutView(View):
+    template_name = 'accounts/logout.html'
+
+    def get(self, request): # type: ignore
+        if not request.user.is_authenticated:
+            messages.info(request, "You are already logged out.") # type: ignore
+            return redirect('login')
+        return render(request, self.template_name) # type: ignore
+
+    def post(self, request): # type: ignore
+        if request.user.is_authenticated:
+            logout(request)
+            messages.success(request, "Logout successful.") # type: ignore
+        else:
+            messages.info(request, "You are already logged out.") # type: ignore
+        return redirect('login')
